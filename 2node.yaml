@@ -1,0 +1,57 @@
+- name: appnodejs
+  hosts: mc2
+  vars:
+    project_path: /home/ansible/node-hello
+    branch: "{{ branch }}"   
+
+  tasks:
+  - include_vars: vars.yaml
+    
+    
+  - shell: "echo {{  NODE_ENV }} , {{ dbUserName }} , {{dbPassword }}"
+    register: op
+
+  - debug: var=op.stdout
+
+ 
+  - name: Clone the repository
+    git:
+        repo: https://github.com/smukesh/node-hello.git
+        dest: "{{ project_path }}"
+        version: "{{ branch }}"
+        force: yes
+ 
+  - name: Give insecure permissions to an existing file
+    file:
+     path: "{{ project_path }}"
+     owner: ansible
+     group: ansible
+     mode: '755'
+     recurse: yes
+
+
+  - name: installing npm
+    command: npm install
+    args:
+      chdir:  "{{ project_path }}"
+
+  
+  - name: Delete old pm2 process
+    command: pm2 delete node-app
+    ignore_errors: yes
+  
+  - name: Start pm2
+    command: pm2 start {{ project_path }}/index.js --name node-app
+  
+
+  - name: Validating the port is up for nodejs app
+    tags: nodevalidate
+    wait_for:
+       host: "localhost"
+       port: 3000
+       delay: 1
+       timeout: 5
+       state: started
+       msg: "NodeJS server is not running"
+
+
