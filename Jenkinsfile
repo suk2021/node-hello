@@ -20,12 +20,8 @@ stages {
                   withCredentials([string(credentialsId: 'ansiblekey', variable: 'ansiblekey')]) {
 
                 script {
-                  
-
-                    sh """ 
-
-                    ansiblePlaybook credentialsId: 'ansible-key', extras: 'NODE_ENV=NODE-ENV-MASTER', installation: 'ansible', inventory: 'inventory', playbook: '2node.yaml'
-                    """
+                   ansiblePlaybook credentialsId: 'ansible-key', extras: 'NODE_ENV=NODE-ENV-MASTER', installation: 'ansible', inventory: 'inventory', playbook: '2node.yaml'
+                   
                     }
                 }
             }
