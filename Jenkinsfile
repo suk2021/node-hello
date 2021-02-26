@@ -24,9 +24,9 @@ stages {
 
                     sh """ 
 
-                     echo ${BRANCH_NAME} ${params.NODEENV}
+                     //echo ${BRANCH_NAME} ${params.NODEENV}
 
-                     ansible-playbook nodejs.yaml --private-key=${key} -e "\branch=${BRANCH_NAME} NODE_ENV=NODE-ENV-${BRANCH_NAME}\" -vv 
+                     ansible-playbook nodejs.yaml --private-key=${key} -e "\branch=master NODE_ENV=NODE-ENV-master\" -vv 
                      """
                     }
                 }
