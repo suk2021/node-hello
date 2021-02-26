@@ -8,7 +8,7 @@ pipeline {
 //      password(name: 'DBPASSWD', description: 'Password for login to DB')
 //        string(name: 'GITUSER', description: 'Username for login to Git')
 //        password(name: 'GitPASSWD', description: 'Password for login to Git')
-        string(name: 'NODEENV', description: 'Node Envionment')
+        string(name: 'NODE_ENV', description: 'Node Envionment')
 //        string(name: 'BranchName', description: 'Branch-name ')
 
    }
@@ -20,7 +20,7 @@ stages {
                   withCredentials([string(credentialsId: 'ansiblekey', variable: 'ansiblekey')]) {
 
                 script {
-                   ansiblePlaybook credentialsId: 'ansible-key',  installation: 'ansible', inventory: 'inventory', playbook: '2node.yaml' , extras: '-e NODE_ENV=NODE-ENV-MASTER -e branch=${BRANCH_NAME}'
+                   ansiblePlaybook credentialsId: 'ansible-key',  installation: 'ansible', inventory: 'inventory', playbook: '2node.yaml' , extras: '-e NODE_ENV=NODE-ENV-${BRANCH_NAME} -e branch=${BRANCH_NAME}'
                    
                     }
                 }
