@@ -8,7 +8,7 @@
   - include_vars: vars.yaml
     
     
-  - shell: "echo {{  NODE_ENV }} , {{ dbUserName }} , {{dbPassword }}"
+  - shell: "echo {{ branch }}{{  NODE_ENV }} , {{ dbUserName }} , {{dbPassword }}"
     register: op
 
   - debug: var=op.stdout
