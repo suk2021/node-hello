@@ -4,12 +4,12 @@ pipeline {
 
       parameters {
 
-        string(name: 'DBUSER', description: 'Username for login to DB')
-        password(name: 'DBPASSWD', description: 'Password for login to DB')
-        string(name: 'GITUSER', description: 'Username for login to Git')
-        password(name: 'GitPASSWD', description: 'Password for login to Git')
+//        string(name: 'DBUSER', description: 'Username for login to DB')
+//      password(name: 'DBPASSWD', description: 'Password for login to DB')
+//        string(name: 'GITUSER', description: 'Username for login to Git')
+//        password(name: 'GitPASSWD', description: 'Password for login to Git')
         string(name: 'NODEENV', description: 'Node Envionment')
-        string(name: 'BranchName', description: 'Branch-name ')
+//        string(name: 'BranchName', description: 'Branch-name ')
 
    }
     
