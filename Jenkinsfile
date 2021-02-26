@@ -24,14 +24,13 @@ stages {
 
                     sh """ 
 
-                     //echo ${BRANCH_NAME} ${params.NODEENV}
-
-                     ansible-playbook nodejs.yaml --private-key=${key} -e "\branch=master NODE_ENV=NODE-ENV-master\" -vv 
-                     """
+                    ansiblePlaybook credentialsId: 'ansible-key', extras: 'NODE_ENV=NODE-ENV', inventory: 'inventory', playbook: '2node.yaml'
+                    """
                     }
                 }
             }
 }
 }
 }
+//                     ansible-playbook nodejs.yaml --private-key=${key} -e "\branch=master NODE_ENV=NODE-ENV-master\" -vv 
 
