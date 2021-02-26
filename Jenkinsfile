@@ -24,7 +24,7 @@ stages {
 
                     sh """ 
 
-                    ansiblePlaybook credentialsId: 'ansible-key', extras: 'NODE_ENV=NODE-ENV', inventory: 'inventory', playbook: '2node.yaml'
+                    ansible credentialsId: 'ansible-key', extras: 'NODE_ENV=NODE-ENV', inventory: 'inventory', playbook: '2node.yaml'
                     """
                     }
                 }
