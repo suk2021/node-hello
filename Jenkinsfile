@@ -15,21 +15,18 @@ pipeline {
     
 stages {
    
-          stage("Building Nodejs-app-in-${BRANCH_NAME}") {
-            withCredentials([string(credentialsId: 'ansiblekey', variable: 'ansiblekey')]) {
-    
-    
+          stage("Building Nodejs-app-in") {
             steps {
+                  withCredentials([string(credentialsId: 'ansiblekey', variable: 'ansiblekey')]) {
+
                 script {
-                   withCredentials([string(credentialsId: 'ansiblekey', variable: 'ansiblekey')]) {
-    // some block
-    }	
+                  
 
                     sh """ 
 
                      echo ${BRANCH_NAME} ${params.NODEENV}
 
-                     ansible-playbook nodejs.yaml --private-key=${ansiblekey} -e "\branch=${BRANCH_NAME} NODE_ENV=NODE-ENV-${BRANCH_NAME}\" -vv 
+                     ansible-playbook nodejs.yaml --private-key=${key} -e "\branch=${BRANCH_NAME} NODE_ENV=NODE-ENV-${BRANCH_NAME}\" -vv 
                      """
                     }
                 }
