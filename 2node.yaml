@@ -3,6 +3,7 @@
   vars:
     project_path: /home/ansible/node-hello
     branch: "{{ branch }}"   
+    NODE_ENV: "{{ NODE_ENV }}"
 
   tasks:
   - include_vars: vars.yaml
