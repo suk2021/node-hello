@@ -4,12 +4,9 @@ pipeline {
 
       parameters {
 
-//      string(name: 'DBUSER', description: 'Username for login to DB')
-//      password(name: 'DBPASSWD', description: 'Password for login to DB')
-//        string(name: 'GITUSER', description: 'Username for login to Git')
-//        password(name: 'GitPASSWD', description: 'Password for login to Git')
-//        string(name: 'BranchName', description: 'Branch-name ')
-          string defaultValue: 'UI', description: '', name: 'NODE_ENV', trim: false
+       string defaultValue: 'DBUSER', description: 'Username for login to DB', name: 'DBUSER', trim: false
+       string defaultValue: 'GITUSER', description: 'Username for login to DB', name: 'GITUSER', trim: false
+       string defaultValue: 'UI', description: '', name: 'NODE_ENV', trim: false
 
 
    }
@@ -21,7 +18,7 @@ stages {
                   withCredentials([string(credentialsId: 'ansiblekey', variable: 'ansiblekey')]) {
 
                 script {
-                   ansiblePlaybook credentialsId: 'ansible-key',  installation: 'ansible', inventory: 'inventory', playbook: '2node.yaml' , extras: '-e NODE_ENV=${params.NODE-ENV}-${BRANCH_NAME} -e branch=${BRANCH_NAME}'
+                   ansiblePlaybook credentialsId: 'ansible-key',  installation: 'ansible', inventory: 'inventory', playbook: '2node.yaml' , extras: "-e NODE_ENV=${params.NODE_ENV}-${BRANCH_NAME} -e branch=${BRANCH_NAME}"
                    
                     }
                 }
