@@ -18,7 +18,7 @@ stages {
                   withCredentials([string(credentialsId: 'ansiblekey', variable: 'ansiblekey')]) {
 
                 script {
-                   ansiblePlaybook credentialsId: 'ansible-key',  installation: 'ansible', inventory: 'deployment/inventory', playbook: 'deployment/2node.yaml' , extras: "-e NODE_ENV=${params.NODE_ENV}-${BRANCH_NAME} -e branch=${BRANCH_NAME}"
+                   ansiblePlaybook credentialsId: 'ansible-key',  installation: 'ansible', inventory: 'deployment/inventory', playbook: 'deployment/2node.yaml' , vaultCredentialsId: 'vault-password', extras: "-e NODE_ENV=${params.NODE_ENV}-${BRANCH_NAME} -e branch=${BRANCH_NAME}"
                    
                     }
                 }
