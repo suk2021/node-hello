@@ -14,15 +14,15 @@ pipeline {
 stages {
    
           stage("Building Nodejs-app-in") {
-            steps {
-                  withCredentials([string(credentialsId: 'ansiblekey', variable: 'ansiblekey')]) {
+           steps {
+            //      withCredentials([string(credentialsId: 'ansiblekey', variable: 'ansiblekey')]) {
 
                 script {
                    ansiblePlaybook credentialsId: 'ansible-key',  installation: 'ansible', inventory: 'deployment/inventory', playbook: 'deployment/2node.yaml' ,vaultCredentialsId: 'vault-password' , extras: "-e NODE_ENV=${params.NODE_ENV}-${BRANCH_NAME} -e branch=${BRANCH_NAME}"
                    
                     }
                 }
-            }
+           // }
 }
 }
 }
