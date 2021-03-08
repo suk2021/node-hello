@@ -9,7 +9,7 @@
   - include_vars: vars.yaml
     
     
-  - shell: "echo {{ branch }} , {{  NODE_ENV }} , {{ dbUserName }} , {{dbPassword }}"
+  - shell: "echo {{ branch }} , {{  NODE_ENV }} , {{ dbUserName }} , {{dbPassword }} , {{ MAILGUN_KEY }}, {{ SECRET }}, {{ githubpassword }}, {{ githubuser }}"
     register: op
 
   - debug: var=op.stdout
