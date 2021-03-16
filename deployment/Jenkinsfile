@@ -17,10 +17,19 @@ stages {
            steps {
             //      withCredentials([string(credentialsId: 'ansiblekey', variable: 'ansiblekey')]) {
 
+              when {
+                 expression {
+                   env.CHANGE_ID && env.BRANCH_NAME.startsWith("PR-")
+                  }
+                   sh """ echo ${env.CHANGE_BRANCH} ${env.CHANGE_ID} """
+                   ansiblePlaybook credentialsId: 'ansible-key',  installation: 'ansible', inventory: 'deployment/inventory', playbook: 'deployment/2node.yaml' ,vaultCredentialsId: 'vault-password' , extras: "-e NODE_ENV=${params.NODE_ENV}-${BRANCH_NAME} -e branch=${env.CHANGE_BRANCH}"
+                   
+                    }
                 script {
                    ansiblePlaybook credentialsId: 'ansible-key',  installation: 'ansible', inventory: 'deployment/inventory', playbook: 'deployment/2node.yaml' ,vaultCredentialsId: 'vault-password' , extras: "-e NODE_ENV=${params.NODE_ENV}-${BRANCH_NAME} -e branch=${BRANCH_NAME}"
                    
                     }
+            
                 }
            // }
 }
