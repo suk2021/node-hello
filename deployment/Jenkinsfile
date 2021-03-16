@@ -1,6 +1,6 @@
 pipeline {
     agent any
-   
+
 
       parameters {
 
@@ -10,20 +10,38 @@ pipeline {
 
 
    }
-    
-stages {
-   
-          stage("Building Nodejs-app-in") {
-           steps {
-            //      withCredentials([string(credentialsId: 'ansiblekey', variable: 'ansiblekey')]) {
 
+stages {
+
+          stage("Building Nodejs-app-with-Pull-request") {
+           
+              when {
+                 expression { env.CHANGE_ID && env.BRANCH_NAME.startsWith("PR-") }
+              }
+   
+           steps {         
+                script {
+                   ansiblePlaybook credentialsId: 'ansible-key',  installation: 'ansible', inventory: 'deployment/inventory', playbook: 'deployment/2node.yaml' ,vaultCredentialsId: 'vault-password' , extras: "-e NODE_ENV=${params.NODE_ENV}-${BRANCH_NAME} -e branch=${env.CHANGE_BRANCH}"
+
+                    }
+
+                }
+
+}
+          stage("Building Nodejs-app-without-Pull-request") {
+           
+              when {
+                 expression { env.BRANCH_NAME != "PR-*" }
+              }
+   
+           steps {         
                 script {
                    ansiblePlaybook credentialsId: 'ansible-key',  installation: 'ansible', inventory: 'deployment/inventory', playbook: 'deployment/2node.yaml' ,vaultCredentialsId: 'vault-password' , extras: "-e NODE_ENV=${params.NODE_ENV}-${BRANCH_NAME} -e branch=${BRANCH_NAME}"
-                   
-                    }
-                }
-           // }
-}
-}
-}
 
+                    }
+
+                }
+
+}}
+
+}//
